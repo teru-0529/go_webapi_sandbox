@@ -71,5 +71,12 @@ go run . %port_no%
 ```
 docker compose up
 ```
+### SECTION-058 Makefileを追加する
+
+windwosのため断念
+
+### SECTION-059 Github Actionsを利用した継続的インテグレーション環境
+
+* テストとコードカバレッジ取得の自動実行
 
 2022/09/19
