@@ -18,6 +18,7 @@ https://github.com/teru-0529/go_webapi_sandbox
 
 2022/09/18
 
+
 ### SECTION-054 Webサーバーを起動する
 
 * 動くだけのWebサーバーを構築
@@ -30,6 +31,7 @@ https://github.com/teru-0529/go_webapi_sandbox
 go fmt
 go run .
 ```
+
 
 ### SECTION-055 リファクタリングとテストコード
 
@@ -52,6 +54,7 @@ go run .
 go test -v ./...
 ```
 
+
 ### SECTION-056 ポート番号を変更できるようにする
 
 * 任意のポートでHTTPサーバーを起動できるようにする
@@ -63,6 +66,7 @@ go test -v ./...
 go run . %port_no%
 ```
 
+
 ### SECTION-057 Dockerを利用した実行環境
 
 * マルチステージビルドを実施し、ビルド環境/実行環境を分割する。
@@ -71,6 +75,8 @@ go run . %port_no%
 ```
 docker compose up
 ```
+
+
 ### SECTION-058 Makefileを追加する
 
 * windwos環境のため、help(grep)/test(Buildができない？)以外を設定
@@ -82,9 +88,15 @@ docker compose up
 
 2022/09/19
 
+
 ### SECTION-060 環境変数から設定をロードする
 
 * 引数での指定を戻して、環境変数を使って起動する。
 * TODO: ポート番号の動的指定をしなくなったためテストコードを一時的にスキップ
+
+
+### SECTION-061 シグナルをハンドリングする
+
+* グレースフルシャットダウンを実現する。
 
 2022/09/20
