@@ -5,7 +5,10 @@ services:
     build:
       args:
         - target=dev
+    environment:
+      TODO_ENV: dev
+      PORT: ${API_PORT}
     volumes:
       - .:/app
     ports:
-      - "18000:80"
+      - "18000:${API_PORT}"
