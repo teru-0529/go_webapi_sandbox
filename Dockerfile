@@ -1,5 +1,5 @@
 # バイナリ作成（本番環境用ビルド実行）コンテナ
-FROM golang:1.19.1-bullseys as release-builder
+FROM golang:1.19.1-bullseye as release-builder
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
-RUN go build -trimpath ldflags "-w -s" -o app
+RUN go build -trimpath -ldflags "-w -s" -o app
 
 # -----------------------------------------------------------
 

@@ -2,7 +2,7 @@
 
 DOCKER_TAG := latest
 build: ## build docker image to release
-	docker build -t teru-0529/gotodo:${DOCKER_TAG} --target deploy ./
+	docker build -t teru-0529/gotodo:${DOCKER_TAG} --target release ./
 
 build-local: ## build docker image to local development
 	docker compose build --no-cache
