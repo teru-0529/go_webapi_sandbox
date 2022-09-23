@@ -120,4 +120,10 @@ docker compose up
 
 * `Server`型、`NewMux`関数を使って`Run`関数をリファクタリングする。
 
+
+### SECTION-065 「entity.Task」型の定義と永続化方法の仮実装
+
+* TODOタスクを型として定義する。
+* 永続化のための仮実装（DBを使わずMapとして保存）
+
 2022/09/23
