@@ -10,6 +10,10 @@ https://github.com/budougumi0617/go_todo_app
 https://github.com/teru-0529/go_webapi_sandbox
 
 
+## 参考情報
+https://qiita.com/mserizawa/items/b833e407d89abd21ee72
+
+
 ### SECTION-053 プロジェクトの初期化
 
 * リポジトリの作成、クローン
@@ -125,5 +129,12 @@ docker compose up
 
 * TODOタスクを型として定義する。
 * 永続化のための仮実装（DBを使わずMapとして保存）
+
+
+### SECTION-066 ヘルパー関数を実装する
+
+* 「レスポンスデータ」をJSONに変換しステータスコードと合わせて`http.ResponseWriter`インターフェースを満たす型の値に書き込む共通化のためのヘルパー関数を実装。
+* テストで利用するJSON同士の比較関数を実装。
+* テスト用のファイル読込み関数を実装。
 
 2022/09/23
