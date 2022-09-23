@@ -32,5 +32,4 @@ func RespondJSON(ctx context.Context, w http.ResponseWriter, body any, status in
 	if _, err := fmt.Fprintf(w, "%s", bodyBytes); err != nil {
 		fmt.Printf("write response error: %+v", err)
 	}
-
 }
