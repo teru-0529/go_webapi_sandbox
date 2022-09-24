@@ -1,4 +1,4 @@
-package inmemory
+package in_memory
 
 import (
 	"errors"
@@ -15,6 +15,11 @@ type TaskRepository struct {
 	// TODO:DB無しの検証用のためexport
 	LastID model.TaskID
 	Tasks  map[model.TaskID]*model.Task
+}
+
+// コンストラクタ
+func New() *TaskRepository {
+	return &TaskRepository{Tasks: map[model.TaskID]*model.Task{}}
 }
 
 // タスク追加

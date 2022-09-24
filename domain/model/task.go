@@ -12,11 +12,11 @@ const (
 )
 
 type Task struct {
-	ID       TaskID     `json:"id"`
-	Title    string     `json:"title"`
-	Status   TaskStatus `json:"status"`
-	CreateAt time.Time  `json:"create_at"`
-	UpdateAt time.Time  `json:"update_at"`
+	ID        TaskID     `json:"id"`
+	Title     string     `json:"title"`
+	Status    TaskStatus `json:"status"`
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
 }
 
 type Tasks []*Task
