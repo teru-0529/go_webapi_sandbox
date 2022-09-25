@@ -30,7 +30,6 @@ func NewMux() http.Handler {
 			Repository: in_memory.InMemoryRepo,
 		}
 		r.Get("/", lt.ServeHTTP)
-
 	})
 	return mux
 }
