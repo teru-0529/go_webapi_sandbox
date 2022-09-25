@@ -63,6 +63,5 @@ func TestListTasks(t *testing.T) {
 			res := w.Result()
 			testutil.AssertResponse(t, res, tt.want.status, testutil.LoadFile(t, tt.want.resFile))
 		})
-
 	}
 }
