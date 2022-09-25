@@ -160,4 +160,8 @@ docker compose up
 * タスク一覧のレスポンスを返す実装
 
 
+### SECTION-070 HTTPハンドラーをルーティングに設定する
+
+* `github.com/go-chi/chi`によるルーティング
+
 2022/09/25
