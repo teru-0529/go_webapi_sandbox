@@ -7,19 +7,22 @@ import (
 )
 
 var (
-	Tasks       = &TaskRepository{Tasks: map[model.TaskID]*model.Task{}}
+	// インメモリリポジトリ（シングルトン）
+	InMemoryRepo = &TaskRepository{Tasks: map[model.TaskID]*model.Task{}}
+	// データなしエラー
 	ErrNotFound = errors.New("not found")
 )
 
 type TaskRepository struct {
-	// TODO:DB無しの検証用のためexport
+	// TODO:Inメモリでの検証用のためexport
 	LastID model.TaskID
 	Tasks  map[model.TaskID]*model.Task
 }
 
 // コンストラクタ
-func New() *TaskRepository {
-	return &TaskRepository{Tasks: map[model.TaskID]*model.Task{}}
+func NewTaskRepo() *TaskRepository {
+	// シングルトンのリポジトリを返す
+	return InMemoryRepo
 }
 
 // タスク追加
@@ -31,16 +34,16 @@ func (tr *TaskRepository) Add(task *model.Task) (model.TaskID, error) {
 }
 
 // 全タスク取得
-func (tr *TaskRepository) GetAll() model.Tasks {
+func (tr *TaskRepository) List() model.Tasks {
 	tasks := make([]*model.Task, len(tr.Tasks))
-	for i, t := range tr.Tasks {
-		tasks[i-1] = t
+	for i, task := range tr.Tasks {
+		tasks[i-1] = task
 	}
 	return tasks
 }
 
-// タスク取得（ID指定）
-func (tr *TaskRepository) GetById(id model.TaskID) (*model.Task, error) {
+// タスク取得（PK指定）
+func (tr *TaskRepository) GetByPk(id model.TaskID) (*model.Task, error) {
 	if task, ok := tr.Tasks[id]; ok {
 		return task, nil
 	}
