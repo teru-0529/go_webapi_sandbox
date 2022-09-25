@@ -1,7 +1,6 @@
-package hander
+package handler
 
 import (
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -54,8 +53,6 @@ func TestListTasks(t *testing.T) {
 
 			w := httptest.NewRecorder()
 			r := httptest.NewRequest(http.MethodGet, "/tasks", nil)
-
-			log.Print(in_memory.TaskRepository{Tasks: tt.tasks})
 
 			sut := ListTasks{Repository: &in_memory.TaskRepository{Tasks: tt.tasks}}
 			sut.ServeHTTP(w, r)
