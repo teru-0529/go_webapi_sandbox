@@ -42,7 +42,7 @@ func TestPostTasks(t *testing.T) {
 	for n, tt := range tests {
 		tt := tt
 		t.Run(n, func(t *testing.T) {
-			// t.Parallel() INFO:テストをパラレルで行うことができる
+			// t.Parallel() //INFO:テストをパラレルで行うことができる
 
 			w := httptest.NewRecorder()
 			r := httptest.NewRequest(
@@ -50,13 +50,6 @@ func TestPostTasks(t *testing.T) {
 				"/tasks",
 				bytes.NewReader(testutil.LoadFile(t, tt.reqFile)),
 			)
-
-			// log.Print(100) //INFO:
-			// log.Print(r)   //INFO:
-			// log.Print(200)        //INFO:
-			// log.Print(tt.reqFile) //INFO:
-			// log.Print(300)                              //INFO:
-			// log.Print(testutil.LoadFile(t, tt.reqFile)) //INFO:
 
 			sut := PostTasks{
 				Repository: &in_memory.TaskRepository{
@@ -67,8 +60,6 @@ func TestPostTasks(t *testing.T) {
 			sut.ServeHTTP(w, r)
 
 			res := w.Result()
-			// log.Print(300)     //INFO:
-			// log.Print(20, res) //INFO:
 			testutil.AssertResponse(t, res, tt.want.status, testutil.LoadFile(t, tt.want.resFile))
 		})
 	}

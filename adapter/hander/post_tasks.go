@@ -45,9 +45,9 @@ func (pt *PostTasks) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		CreatedAt: time.Now(),
 	}
 
-	var taskRepo repository.TaskRepositorier = in_memory.New()
+	var taskRepo repository.TaskRepositorier = in_memory.NewTaskRepo()
 	id, err := taskRepo.Add(task)
-	// id, err := in_memory.Tasks.Add(task) TODO:リポジトリパターン
+
 	if err != nil {
 		RespondJSON(ctx, w, &ErrResponse{
 			Message: err.Error(),
