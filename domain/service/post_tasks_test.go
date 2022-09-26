@@ -10,7 +10,6 @@ import (
 )
 
 func TestPostTasks(t *testing.T) {
-
 	now := time.Now()
 
 	type want struct {
@@ -55,5 +54,4 @@ func TestPostTasks(t *testing.T) {
 			}
 		})
 	}
-
 }

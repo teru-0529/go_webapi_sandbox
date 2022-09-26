@@ -10,7 +10,6 @@ import (
 )
 
 func TestListTasks(t *testing.T) {
-
 	now := time.Now()
 
 	type want struct {
@@ -81,5 +80,4 @@ func TestListTasks(t *testing.T) {
 			}
 		})
 	}
-
 }
