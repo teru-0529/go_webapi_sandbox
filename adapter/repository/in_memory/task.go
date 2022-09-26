@@ -34,12 +34,12 @@ func (tr *TaskRepository) Add(task *model.Task) (*model.Task, error) {
 }
 
 // 全タスク取得
-func (tr *TaskRepository) List() model.Tasks {
+func (tr *TaskRepository) List() (model.Tasks, error) {
 	tasks := make([]*model.Task, len(tr.Tasks))
 	for i, task := range tr.Tasks {
 		tasks[i-1] = task
 	}
-	return tasks
+	return tasks, nil
 }
 
 // タスク取得（PK指定）

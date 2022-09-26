@@ -25,7 +25,7 @@ func (lt *ListTasks) Validate() error {
 
 // execute
 func (lt *ListTasks) Execute() error {
-	tasks := lt.Repository.List()
+	tasks, err := lt.Repository.List()
 	lt.Tasks = tasks
-	return nil
+	return err
 }

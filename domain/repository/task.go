@@ -6,7 +6,7 @@ type TaskRepositorier interface {
 	// タスク追加
 	Add(task *model.Task) (*model.Task, error)
 	// 全タスク取得
-	List() model.Tasks
+	List() (model.Tasks, error)
 	// タスク取得（PK指定）
 	GetByPk(id model.TaskID) (*model.Task, error)
 }
