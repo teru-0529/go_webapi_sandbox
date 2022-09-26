@@ -2,11 +2,15 @@
   {
     "id": 1,
     "title": "test1",
-    "status": "todo"
+    "status": "todo",
+    "created_at": "2022-01-01T01:01:00+09:00",
+    "updated_at": "2022-01-01T01:01:00+09:00"
   },
   {
     "id": 2,
     "title": "test2",
-    "status": "done"
+    "status": "done",
+    "created_at": "2022-01-01T01:01:00+09:00",
+    "updated_at": "2022-01-01T01:01:00+09:00"
   }
 ]

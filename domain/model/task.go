@@ -20,3 +20,13 @@ type Task struct {
 }
 
 type Tasks []*Task
+
+func NewTask(title string) *Task {
+	task := &Task{
+		Title:     title,
+		Status:    TaskStatusTodo,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}
+	return task
+}

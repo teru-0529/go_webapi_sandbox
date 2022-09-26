@@ -26,11 +26,11 @@ func NewTaskRepo() *TaskRepository {
 }
 
 // タスク追加
-func (tr *TaskRepository) Add(task *model.Task) (model.TaskID, error) {
+func (tr *TaskRepository) Add(task *model.Task) (*model.Task, error) {
 	tr.LastID++
 	task.ID = tr.LastID
 	tr.Tasks[task.ID] = task
-	return task.ID, nil
+	return task, nil
 }
 
 // 全タスク取得

@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/teru-0529/go_webapi_sandbox/adapter/repository/in_memory"
 	"github.com/teru-0529/go_webapi_sandbox/domain/model"
@@ -22,14 +23,18 @@ func TestListTasks(t *testing.T) {
 		"ok": {
 			tasks: map[model.TaskID]*model.Task{
 				1: {
-					ID:     1,
-					Title:  "test1",
-					Status: "todo",
+					ID:        1,
+					Title:     "test1",
+					Status:    "todo",
+					CreatedAt: time.Date(2022, 1, 1, 1, 1, 0, 0, time.Local),
+					UpdatedAt: time.Date(2022, 1, 1, 1, 1, 0, 0, time.Local),
 				},
 				2: {
-					ID:     2,
-					Title:  "test2",
-					Status: "done",
+					ID:        2,
+					Title:     "test2",
+					Status:    "done",
+					CreatedAt: time.Date(2022, 1, 1, 1, 1, 0, 0, time.Local),
+					UpdatedAt: time.Date(2022, 1, 1, 1, 1, 0, 0, time.Local),
 				},
 			},
 			want: want{

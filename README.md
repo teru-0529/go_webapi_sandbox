@@ -12,7 +12,11 @@ https://github.com/teru-0529/go_webapi_sandbox
 
 ## 参考情報
 https://qiita.com/mserizawa/items/b833e407d89abd21ee72
+https://zenn.dev/msksgm/articles/20220408-go-itddd-05-repository
+https://qiita.com/tjun/items/3eea798905b597ec83c0
 
+
+https://tikasan.hatenablog.com/entry/2017/11/26/130000
 
 ### SECTION-053 プロジェクトの初期化
 
@@ -164,4 +168,13 @@ docker compose up
 
 * `github.com/go-chi/chi`によるルーティング
 
+
 2022/09/25
+
+### SECTION-071 動作の検証
+
+* Postmanからの実行
+* サービス層の追加
+* Get（単品検索）の追加
+
+2022/09/26

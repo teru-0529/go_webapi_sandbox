@@ -3,12 +3,11 @@ package handler
 import (
 	"encoding/json"
 	"net/http"
-	"time"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/teru-0529/go_webapi_sandbox/adapter/repository/in_memory"
 	"github.com/teru-0529/go_webapi_sandbox/domain/model"
-	"github.com/teru-0529/go_webapi_sandbox/domain/repository"
+	"github.com/teru-0529/go_webapi_sandbox/domain/service"
 )
 
 type PostTasks struct {
@@ -18,6 +17,7 @@ type PostTasks struct {
 
 func (pt *PostTasks) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
+
 	var b struct {
 		Title string `json:"title" validate:"required"`
 	}
@@ -39,14 +39,11 @@ func (pt *PostTasks) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	task := &model.Task{
-		Title:     b.Title,
-		Status:    model.TaskStatusTodo,
-		CreatedAt: time.Now(),
-	}
+	task := model.NewTask(b.Title)
+	service := service.PostTasksService(pt.Repository, task)
 
-	var taskRepo repository.TaskRepositorier = in_memory.NewTaskRepo()
-	id, err := taskRepo.Add(task)
+	// 実行
+	err = service.Execute()
 
 	if err != nil {
 		RespondJSON(ctx, w, &ErrResponse{
@@ -56,6 +53,6 @@ func (pt *PostTasks) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	res := struct {
 		ID model.TaskID `json:"id"`
-	}{ID: id}
+	}{ID: service.Task.ID}
 	RespondJSON(ctx, w, res, http.StatusCreated)
 }
