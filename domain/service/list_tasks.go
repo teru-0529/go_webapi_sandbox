@@ -6,16 +6,16 @@ import (
 )
 
 type ListTasks struct {
-	Repository repository.TaskRepositorier
-	Tasks      model.Tasks
+	repo  repository.TaskRepositorier
+	Tasks model.Tasks
 }
 
 // コンストラクタ
-func ListTasksService(repositorier repository.TaskRepositorier) *ListTasks {
-	listTasks := &ListTasks{
-		Repository: repositorier,
+func ListTasksService(repo repository.TaskRepositorier) *ListTasks {
+	service := &ListTasks{
+		repo: repo,
 	}
-	return listTasks
+	return service
 }
 
 // validate
@@ -25,7 +25,7 @@ func (lt *ListTasks) Validate() error {
 
 // execute
 func (lt *ListTasks) Execute() error {
-	tasks, err := lt.Repository.List()
+	tasks, err := lt.repo.List()
 	lt.Tasks = tasks
 	return err
 }

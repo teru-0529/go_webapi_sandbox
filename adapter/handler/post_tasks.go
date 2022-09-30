@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/go-playground/validator/v10"
@@ -54,5 +55,7 @@ func (pt *PostTasks) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	res := struct {
 		ID model.TaskID `json:"id"`
 	}{ID: service.Task.ID}
+	url := fmt.Sprintf("/tasks/%d", service.Task.ID)
+	w.Header().Add("Location", url)
 	RespondJSON(ctx, w, res, http.StatusCreated)
 }

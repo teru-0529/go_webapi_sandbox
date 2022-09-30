@@ -30,6 +30,20 @@ func NewMux() http.Handler {
 			Repository: in_memory.InMemoryRepo,
 		}
 		r.Get("/", lt.ServeHTTP)
+
+		r.Route("/{id}", func(r chi.Router) {
+			gt := &handler.GetTaskByPk{
+				Repository: in_memory.InMemoryRepo,
+				Validator:  v,
+			}
+			r.Get("/", gt.ServeHTTP)
+
+			pts := &handler.PatchTaskForStatus{
+				Repository: in_memory.InMemoryRepo,
+				Validator:  v,
+			}
+			r.Patch("/status", pts.ServeHTTP)
+		})
 	})
 	return mux
 }

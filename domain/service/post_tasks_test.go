@@ -4,14 +4,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/google/go-cmp/cmp"
 	"github.com/teru-0529/go_webapi_sandbox/adapter/repository/in_memory"
 	"github.com/teru-0529/go_webapi_sandbox/domain/model"
+	"github.com/teru-0529/go_webapi_sandbox/testutil"
 )
 
 func TestPostTasks(t *testing.T) {
-	now := time.Now()
-
 	type want struct {
 		resTask *model.Task
 	}
@@ -21,18 +19,18 @@ func TestPostTasks(t *testing.T) {
 	}{
 		"ok": {
 			reqTask: &model.Task{
-				Title:     "title",
-				Status:    model.TaskStatusTodo,
-				CreatedAt: now,
-				UpdatedAt: now,
+				Title:  "title",
+				Status: model.TaskStatusTodo,
+				// CreatedAt:  now,
+				// ModifiedAt: now,
 			},
 			want: want{
 				resTask: &model.Task{
-					ID:        1,
-					Title:     "title",
-					Status:    model.TaskStatusTodo,
-					CreatedAt: now,
-					UpdatedAt: now,
+					ID:         1,
+					Title:      "title",
+					Status:     model.TaskStatusTodo,
+					CreatedAt:  time.Date(2022, 1, 1, 1, 1, 0, 0, time.UTC),
+					ModifiedAt: time.Date(2022, 1, 1, 1, 1, 0, 0, time.UTC),
 				},
 			},
 		},
@@ -41,17 +39,13 @@ func TestPostTasks(t *testing.T) {
 	for n, tt := range tests {
 		tt := tt
 		t.Run(n, func(t *testing.T) {
-			// t.Parallel() //INFO:テストをパラレルで行うことができる
+			t.Parallel() //INFO:テストをパラレルで行うことができる
 
-			task := tt.reqTask
-			service := PostTasksService(in_memory.InMemoryRepo, task)
+			service := PostTasksService(in_memory.InMemoryRepo, tt.reqTask)
 
 			// 実行
 			_ = service.Execute()
-
-			if diff := cmp.Diff(service.Task, tt.want.resTask); diff != "" {
-				t.Errorf("got differs: (-got +want)\n%s", diff)
-			}
+			testutil.AssertTask(t, service.Task, tt.want.resTask)
 		})
 	}
 }

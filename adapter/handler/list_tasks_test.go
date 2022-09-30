@@ -23,18 +23,18 @@ func TestListTasks(t *testing.T) {
 		"ok": {
 			tasks: map[model.TaskID]*model.Task{
 				1: {
-					ID:        1,
-					Title:     "test1",
-					Status:    "todo",
-					CreatedAt: time.Date(2022, 1, 1, 1, 1, 0, 0, time.UTC),
-					UpdatedAt: time.Date(2022, 1, 1, 1, 1, 0, 0, time.UTC),
+					ID:         1,
+					Title:      "test1",
+					Status:     "todo",
+					CreatedAt:  time.Date(2022, 1, 1, 1, 1, 0, 0, time.UTC),
+					ModifiedAt: time.Date(2022, 1, 1, 1, 1, 0, 0, time.UTC),
 				},
 				2: {
-					ID:        2,
-					Title:     "test2",
-					Status:    "done",
-					CreatedAt: time.Date(2022, 1, 1, 1, 1, 0, 0, time.UTC),
-					UpdatedAt: time.Date(2022, 1, 1, 1, 1, 0, 0, time.UTC),
+					ID:         2,
+					Title:      "test2",
+					Status:     "done",
+					CreatedAt:  time.Date(2022, 1, 1, 1, 1, 0, 0, time.UTC),
+					ModifiedAt: time.Date(2022, 1, 1, 1, 1, 0, 0, time.UTC),
 				},
 			},
 			want: want{
@@ -54,7 +54,7 @@ func TestListTasks(t *testing.T) {
 	for n, tt := range tests {
 		tt := tt
 		t.Run(n, func(t *testing.T) {
-			// t.Parallel() //INFO:テストをパラレルで行うことができる
+			t.Parallel() //INFO:テストをパラレルで行うことができる
 
 			w := httptest.NewRecorder()
 			r := httptest.NewRequest(http.MethodGet, "/tasks", nil)

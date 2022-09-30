@@ -5,28 +5,29 @@ import (
 	"github.com/teru-0529/go_webapi_sandbox/domain/repository"
 )
 
-type PostTasks struct {
+type GetTaskByPk struct {
 	repo repository.TaskRepositorier
+	id   model.TaskID
 	Task *model.Task
 }
 
 // コンストラクタ
-func PostTasksService(repo repository.TaskRepositorier, task *model.Task) *PostTasks {
-	service := &PostTasks{
+func GetTaskByPkService(repo repository.TaskRepositorier, id model.TaskID) *GetTaskByPk {
+	service := &GetTaskByPk{
 		repo: repo,
-		Task: task,
+		id:   id,
 	}
 	return service
 }
 
 // validate
-func (pt *PostTasks) Validate() error {
+func (gt *GetTaskByPk) Validate() error {
 	return nil
 }
 
 // execute
-func (pt *PostTasks) Execute() error {
-	task, err := pt.repo.Add(pt.Task)
-	pt.Task = task
+func (gt *GetTaskByPk) Execute() error {
+	task, err := gt.repo.GetByPk(gt.id)
+	gt.Task = task
 	return err
 }

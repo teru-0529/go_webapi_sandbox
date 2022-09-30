@@ -2,6 +2,7 @@ package in_memory
 
 import (
 	"errors"
+	"time"
 
 	"github.com/teru-0529/go_webapi_sandbox/domain/model"
 )
@@ -27,8 +28,11 @@ func NewTaskRepo() *TaskRepository {
 
 // タスク追加
 func (tr *TaskRepository) Add(task *model.Task) (*model.Task, error) {
+	now := time.Now()
 	tr.LastID++
 	task.ID = tr.LastID
+	task.CreatedAt = now
+	task.ModifiedAt = now
 	tr.Tasks[task.ID] = task
 	return task, nil
 }
@@ -45,6 +49,22 @@ func (tr *TaskRepository) List() (model.Tasks, error) {
 // タスク取得（PK指定）
 func (tr *TaskRepository) GetByPk(id model.TaskID) (*model.Task, error) {
 	if task, ok := tr.Tasks[id]; ok {
+		return task, nil
+	}
+	return nil, ErrNotFound
+}
+
+// タスク修正
+func (tr *TaskRepository) Patch(id model.TaskID, fields map[model.UpdateField]any) (*model.Task, error) {
+	if task, ok := tr.Tasks[id]; ok && len(fields) > 0 {
+		if val, ok := fields[model.F_Title]; ok {
+			task.Title = val.(string)
+		}
+		if val, ok := fields[model.F_Status]; ok {
+			task.Status = val.(model.TaskStatus)
+		}
+		task.ModifiedAt = time.Now()
+
 		return task, nil
 	}
 	return nil, ErrNotFound
