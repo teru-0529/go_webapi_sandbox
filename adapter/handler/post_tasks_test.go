@@ -42,7 +42,7 @@ func TestPostTasks(t *testing.T) {
 	for n, tt := range tests {
 		tt := tt
 		t.Run(n, func(t *testing.T) {
-			// t.Parallel() //INFO:テストをパラレルで行うことができる
+			t.Parallel() //INFO:テストをパラレルで行うことができる
 
 			w := httptest.NewRecorder()
 			r := httptest.NewRequest(

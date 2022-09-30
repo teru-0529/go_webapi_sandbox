@@ -6,8 +6,10 @@ import (
 	"net/http"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp/cmpopts"
 )
 
 // JSONオブジェクトの検証
@@ -21,7 +23,12 @@ func AssertJSON(t *testing.T, want, got []byte) {
 	if err := json.Unmarshal(got, &jg); err != nil {
 		t.Fatalf("cannot unmarshal got %q: %+v", got, err)
 	}
-	if diff := cmp.Diff(jg, jw); diff != "" {
+	opts := []cmp.Option{
+		cmpopts.IgnoreMapEntries(func(k string, v any) bool {
+			return k == "created_at" || k == "modified_at"
+		}),
+	}
+	if diff := cmp.Diff(jg, jw, opts...); diff != "" {
 		t.Errorf("got differs: (-got +want)\n%s", diff)
 	}
 }
@@ -59,4 +66,16 @@ func LoadFile(t *testing.T, path string) []byte {
 		t.Fatalf("cannot read from %q: %+v", path, err)
 	}
 	return bt
+}
+
+// Taskオブジェクトの検証
+func AssertTask(t *testing.T, want, got any) {
+	t.Helper()
+
+	opts := []cmp.Option{
+		cmpopts.IgnoreTypes(time.Time{}),
+	}
+	if diff := cmp.Diff(want, got, opts...); diff != "" {
+		t.Errorf("got differs: (-got +want)\n%s", diff)
+	}
 }

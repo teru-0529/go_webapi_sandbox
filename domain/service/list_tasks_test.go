@@ -1,8 +1,6 @@
-package handler
+package service
 
 import (
-	"net/http"
-	"net/http/httptest"
 	"testing"
 	"time"
 
@@ -12,9 +10,10 @@ import (
 )
 
 func TestListTasks(t *testing.T) {
+	now := time.Now()
+
 	type want struct {
-		status  int
-		resFile string
+		resTasks model.Tasks
 	}
 	tests := map[string]struct {
 		tasks map[model.TaskID]*model.Task
@@ -26,27 +25,40 @@ func TestListTasks(t *testing.T) {
 					ID:         1,
 					Title:      "test1",
 					Status:     "todo",
-					CreatedAt:  time.Date(2022, 1, 1, 1, 1, 0, 0, time.UTC),
-					ModifiedAt: time.Date(2022, 1, 1, 1, 1, 0, 0, time.UTC),
+					CreatedAt:  now,
+					ModifiedAt: now,
 				},
 				2: {
 					ID:         2,
 					Title:      "test2",
 					Status:     "done",
-					CreatedAt:  time.Date(2022, 1, 1, 1, 1, 0, 0, time.UTC),
-					ModifiedAt: time.Date(2022, 1, 1, 1, 1, 0, 0, time.UTC),
+					CreatedAt:  now,
+					ModifiedAt: now,
 				},
 			},
 			want: want{
-				status:  http.StatusOK,
-				resFile: "testdata/list_tasks/ok_res.json.golden",
+				resTasks: []*model.Task{
+					{
+						ID:         1,
+						Title:      "test1",
+						Status:     "todo",
+						CreatedAt:  now,
+						ModifiedAt: now,
+					},
+					{
+						ID:         2,
+						Title:      "test2",
+						Status:     "done",
+						CreatedAt:  now,
+						ModifiedAt: now,
+					},
+				},
 			},
 		},
 		"empty": {
 			tasks: map[model.TaskID]*model.Task{},
 			want: want{
-				status:  http.StatusOK,
-				resFile: "testdata/list_tasks/empty_res.json.golden",
+				resTasks: []*model.Task{},
 			},
 		},
 	}
@@ -56,14 +68,12 @@ func TestListTasks(t *testing.T) {
 		t.Run(n, func(t *testing.T) {
 			t.Parallel() //INFO:テストをパラレルで行うことができる
 
-			w := httptest.NewRecorder()
-			r := httptest.NewRequest(http.MethodGet, "/tasks", nil)
+			repo := &in_memory.TaskRepository{Tasks: tt.tasks}
+			service := ListTasksService(repo)
 
-			sut := ListTasks{Repository: &in_memory.TaskRepository{Tasks: tt.tasks}}
-			sut.ServeHTTP(w, r)
-
-			res := w.Result()
-			testutil.AssertResponse(t, res, tt.want.status, testutil.LoadFile(t, tt.want.resFile))
+			// 実行
+			_ = service.Execute()
+			testutil.AssertTask(t, service.Tasks, tt.want.resTasks)
 		})
 	}
 }
