@@ -7,6 +7,7 @@ import (
 
 	"github.com/teru-0529/go_webapi_sandbox/adapter/repository/in_memory"
 	"github.com/teru-0529/go_webapi_sandbox/domain/model"
+	"github.com/teru-0529/go_webapi_sandbox/domain/repository"
 	"github.com/teru-0529/go_webapi_sandbox/testutil"
 )
 
@@ -60,7 +61,7 @@ func TestPatchTaskForStatus(t *testing.T) {
 			modelId: model.TaskID(10),
 			status:  model.TaskStatusDone,
 			want: want{
-				err:     in_memory.ErrNotFound,
+				err:     repository.ErrNotFound,
 				resTask: nil,
 			},
 		},

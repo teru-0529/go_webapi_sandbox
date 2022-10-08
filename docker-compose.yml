@@ -11,4 +11,4 @@ services:
     volumes:
       - .:/app
     ports:
-      - "18000:${API_PORT}"
+      - "${RELEASE_PORT}:${API_PORT}"
