@@ -1,5 +1,33 @@
 version: "3.9"
 services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    ports:
+      - ${POSTGRES_PORT}:5432
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    tty: true
+    restart: always
+    user: root
+    volumes:
+      - ./ddl:/docker-entrypoint-initdb.d
+
+  pgweb:
+    image: sosedoff/pgweb
+    container_name: pgweb
+    ports:
+      - ${PGWEB_PORT}:8081
+    environment:
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable
+    links:
+      - postgres:postgres
+    restart: always
+    depends_on:
+      - postgres
+
   app:
     image: gotodo
     build:
@@ -7,8 +35,10 @@ services:
         - target=dev
     environment:
       TODO_ENV: dev
-      PORT: ${API_PORT}
+      PORT: ${APP_PORT}
     volumes:
       - .:/app
     ports:
-      - "${RELEASE_PORT}:${API_PORT}"
+      - "${API_PORT}:${APP_PORT}"
+    depends_on:
+      - postgres
