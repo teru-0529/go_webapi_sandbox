@@ -1,6 +1,8 @@
 package repository
 
-import "github.com/teru-0529/go_webapi_sandbox/domain/model"
+import (
+	"github.com/teru-0529/go_webapi_sandbox/domain/model"
+)
 
 type TaskRepositorier interface {
 	// タスク追加

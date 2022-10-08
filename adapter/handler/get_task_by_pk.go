@@ -8,6 +8,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/teru-0529/go_webapi_sandbox/adapter/repository/in_memory"
 	"github.com/teru-0529/go_webapi_sandbox/domain/model"
+	"github.com/teru-0529/go_webapi_sandbox/domain/repository"
 	"github.com/teru-0529/go_webapi_sandbox/domain/service"
 )
 
@@ -39,7 +40,7 @@ func (gt *GetTaskByPk) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	err = service.Execute()
 
 	if err != nil {
-		if err == in_memory.ErrNotFound {
+		if err == repository.ErrNotFound {
 			RespondJSON(ctx, w, &ErrResponse{
 				Message: err.Error(),
 			}, http.StatusNotFound)
