@@ -1,18 +1,14 @@
 package in_memory
 
 import (
-	"errors"
 	"time"
 
 	"github.com/teru-0529/go_webapi_sandbox/domain/model"
+	"github.com/teru-0529/go_webapi_sandbox/domain/repository"
 )
 
-var (
-	// インメモリリポジトリ（シングルトン）
-	InMemoryRepo = &TaskRepository{Tasks: map[model.TaskID]*model.Task{}}
-	// データなしエラー
-	ErrNotFound = errors.New("not found")
-)
+// インメモリリポジトリ（シングルトン）
+var InMemoryRepo = &TaskRepository{Tasks: map[model.TaskID]*model.Task{}}
 
 type TaskRepository struct {
 	// TODO:Inメモリでの検証用のためexport
@@ -51,7 +47,7 @@ func (tr *TaskRepository) GetByPk(id model.TaskID) (*model.Task, error) {
 	if task, ok := tr.Tasks[id]; ok {
 		return task, nil
 	}
-	return nil, ErrNotFound
+	return nil, repository.ErrNotFound
 }
 
 // タスク修正
@@ -67,5 +63,5 @@ func (tr *TaskRepository) Patch(id model.TaskID, fields map[model.UpdateField]an
 
 		return task, nil
 	}
-	return nil, ErrNotFound
+	return nil, repository.ErrNotFound
 }
